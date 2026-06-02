@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # LynkShort | Production-Grade MERN URL Shortener & Analytics
 
 LynkShort is an ultra-premium, production-grade MERN (MongoDB, Express, React, Node.js) URL Shortener and Analytics system. Designed for high performance, ease of deployment, and a stunning glassmorphic UI experience, it follows enterprise architectural guidelines, clean separation of concerns, and robust security patterns.
@@ -143,3 +144,7 @@ docker compose up -d
 | HTTP Method | Route | Description | Auth Required |
 | :--- | :--- | :--- | :--- |
 | `GET` | `/r/:shortCode` | Perform temporary redirect & track telemetry asynchronously. | No |
+=======
+# url-shortener
+Full-Stack MERN Project to shorten long URL
+>>>>>>> fcf4ff06dc7f786f6eff08e7ef538853fa9b8de5
