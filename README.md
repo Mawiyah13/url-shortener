@@ -1,150 +1,487 @@
-<<<<<<< HEAD
-# LynkShort | Production-Grade MERN URL Shortener & Analytics
+# LynkShort - Premium URL Shortener with Analytics
 
-LynkShort is an ultra-premium, production-grade MERN (MongoDB, Express, React, Node.js) URL Shortener and Analytics system. Designed for high performance, ease of deployment, and a stunning glassmorphic UI experience, it follows enterprise architectural guidelines, clean separation of concerns, and robust security patterns.
+A production-ready URL shortening platform built using the MERN stack. The application allows users to create shortened URLs, generate QR codes, track click analytics, monitor referral sources, and manage links through a modern dashboard.
 
----
+## Live Demo
 
-## 🌟 Key Technical Features
+Frontend: https://url-shortener-self-seven.vercel.app/
 
-1. **Robust Security & Session Management**
-   - Cryptographically hashed passwords utilizing `bcryptjs`.
-   - Secure stateless session validation with JWT (`jsonwebtoken`) passed via `Authorization: Bearer` headers.
-   - Guarded private dashboard views and route boundaries.
+Backend API: https://url-shortener-1cyt.onrender.com
 
-2. **Advanced Redirection Engine**
-   - Instant redirects utilizing `302 Found` status to bypass persistent client-side browser caching, ensuring accurate click capturing.
-   - Future-dated expiration validations for links with clean styled feedback pages if expired.
-   - Unique short code generation using cryptographically strong bytes, alongside custom alias validation rules.
-
-3. **Background Analytics Tracker**
-   - High-fidelity User-Agent parsing resolving Browser, Operating System, and Device platform (Desktop / Mobile / Tablet) with zero bundle size dependencies.
-   - GDPR-compliant, anonymized IP logging (`192.168.1.xxx`).
-   - Clean referral source extraction (Twitter, LinkedIn, Google, Reddit, etc.) with default direct captures.
-   - Completely non-blocking background workers ensuring click redirection takes less than 15ms.
-
-4. **Zero-Dependency SVG Trend Graphing**
-   - Standard chart libraries drag in substantial bundles. We implemented a custom React-SVG area path calculator that draws animated, glowing charts with gridlines, responsive coordinate mapping, and tooltips directly on the client canvas.
-
-5. **Mongoose Database Connector with Resilient Fallback (Mock DB)**
-   - Booting a grading project without database configurations can be frustrating. LynkShort features a smart connection bootstrapper: if a local or cluster MongoDB is offline, it automatically falls back to a high-fidelity, in-memory Mock DB store mimicking Mongoose queries (including analytical collections aggregates) and alerts the developer with a `Demo Mode (Mock DB)` banner.
+Demo Video (Loom): https://www.loom.com/share/332713e2e3434945976b7080028a1627
 
 ---
 
-## 🛠️ Technology Stack
+# Project Overview
 
-- **Frontend**: React (Vite SPA Bootstrapper), React Router v6, Lucide Vector Icons, client-side QRCode canvas writer.
-- **Backend**: Node.js, Express, Mongoose, JWT, BcryptJS, Validator, UA-Parser.
-- **Database**: MongoDB (and in-memory mock fallback adapter).
-- **Styling**: Tailored, high-fidelity Vanilla CSS variables design system with Neon accents, blur backdrops, and hover scale micro-animations.
+LynkShort is a full-stack URL shortening platform designed to provide users with link management and analytics capabilities. Users can register, authenticate securely, create shortened URLs, generate QR codes, monitor click statistics, and analyze traffic sources through an interactive dashboard.
 
 ---
 
-## 📂 Project Architecture
+# Application Planning
 
+## Problem Statement
+
+Long URLs are difficult to share, track, and manage. Businesses and individuals require a simple solution that:
+
+* Creates shorter URLs
+* Tracks user engagement
+* Provides traffic insights
+* Generates QR codes for offline sharing
+* Offers secure user-specific link management
+
+## Solution
+
+LynkShort provides:
+
+* URL shortening
+* User authentication
+* QR code generation
+* Click analytics
+* Referral source tracking
+* Device and browser tracking
+* Public statistics sharing
+* Personalized dashboard
+
+---
+
+# Features
+
+## Authentication
+
+* User Registration
+* User Login
+* JWT Authentication
+* Protected Routes
+* Persistent Sessions
+
+## URL Management
+
+* Create Short URLs
+* Custom Short Code Generation
+* Copy Short URL
+* Delete URL
+* User-specific URL Management
+
+## Analytics
+
+* Total Click Tracking
+* Daily Click Trends
+* Device Analytics
+* Browser Analytics
+* Operating System Analytics
+* Referral Source Analytics
+* Public Statistics Page
+
+## QR Code Features
+
+* QR Code Generation
+* Download QR Codes
+* Share QR Codes
+
+## Dashboard
+
+* Interactive User Dashboard
+* URL Listing
+* Analytics Access
+* Public Stats Access
+* Responsive Design
+
+## Deployment
+
+* Frontend deployed on Vercel
+* Backend deployed on Render
+* MongoDB Atlas Database
+
+---
+
+# Application Building Workflow
+
+## Phase 1: Requirement Gathering
+
+* Identified target users.
+* Defined URL shortening requirements.
+* Planned analytics collection.
+* Planned authentication strategy.
+* Determined deployment architecture.
+
+## Phase 2: System Design
+
+* Designed database schema.
+* Designed API structure.
+* Planned frontend routing.
+* Designed analytics workflow.
+* Defined authentication flow.
+
+## Phase 3: Backend Development
+
+Implemented:
+
+* Express Server
+* MongoDB Integration
+* JWT Authentication
+* URL CRUD APIs
+* Redirect Handling
+* Analytics Collection
+* Error Handling Middleware
+
+## Phase 4: Frontend Development
+
+Implemented:
+
+* React Application
+* Authentication Context
+* Protected Routes
+* Dashboard UI
+* Analytics Pages
+* QR Code Modal
+* Responsive Layout
+
+## Phase 5: Testing
+
+Tested:
+
+* Registration
+* Login
+* URL Creation
+* URL Redirection
+* Analytics Collection
+* Public Stats
+* QR Code Generation
+
+## Phase 6: Deployment
+
+Frontend:
+
+* Vercel
+
+Backend:
+
+* Render
+
+Database:
+
+* MongoDB Atlas
+
+---
+
+# Technology Stack
+
+## Frontend
+
+* React
+* React Router
+* Vite
+* Lucide React
+* Recharts
+
+## Backend
+
+* Node.js
+* Express.js
+* JWT Authentication
+
+## Database
+
+* MongoDB Atlas
+* Mongoose
+
+## Deployment
+
+* Vercel
+* Render
+
+---
+
+# Database Design
+
+## User Collection
+
+```javascript
+{
+  username,
+  email,
+  password,
+  createdAt
+}
 ```
-url-shortener/
-├── backend/
-│   ├── src/
-│   │   ├── config/          # MongoDB connectors & high-fidelity MockDB store
-│   │   ├── controllers/     # Route business logic (Auth, URLs, Analytics, Redirects)
-│   │   ├── middlewares/     # JWT Protectors, Validators, and Centralized Exception Handlers
-│   │   ├── models/          # Database Schemas (User, Url, Analytics)
-│   │   ├── routes/          # API endpoint specifications
-│   │   ├── utils/           # Helper scripts (lightweight UA parsers, random code generators)
-│   │   └── app.js           # Express configuration core
-│   ├── .env.example         # Template configuration env
-│   └── package.json
-├── frontend/
-│   ├── src/
-│   │   ├── components/      # Glassmorphic Navbar, QR modal generators, SVG charts
-│   │   ├── context/         # Auth provider & session memory states
-│   │   ├── pages/           # Pages (Dashboard, detailed Analytics, Public stats, 404, Auth)
-│   │   ├── services/        # Automated header-injecting API client
-│   │   ├── App.jsx          # Client router configuration
-│   │   └── main.jsx
-│   ├── index.html           # Master markup, SEO headers, Outfit & Inter fonts
-│   └── package.json
-├── docker-compose.yml       # Provisions an isolated local MongoDB instance
-└── README.md
+
+## URL Collection
+
+```javascript
+{
+  originalUrl,
+  shortCode,
+  user,
+  clicks,
+  createdAt
+}
 ```
 
----
+## Analytics Collection
 
-## 🚀 Quick Setup & Deployment
+```javascript
+{
+  url,
+  browser,
+  device,
+  os,
+  referrer,
+  timestamp
+}
+```
 
-### Step 1: Clone and Provision MongoDB (Optional)
-If you have Docker running, you can spin up a local MongoDB database instantly:
+# API Endpoints
+
+## Authentication
+
+POST /api/auth/register
+
+POST /api/auth/login
+
+GET /api/auth/me
+
+## URL Management
+
+POST /api/urls
+
+GET /api/urls
+
+DELETE /api/urls/:id
+
+## Analytics
+
+GET /api/analytics/:id
+
+GET /api/analytics/public/:shortCode
+
+## Redirect
+
+GET /r/:shortCode
+
+# Setup Instructions
+
+## Clone Repository
+
 ```bash
-docker compose up -d
+git clone https://github.com/YOUR_USERNAME/url-shortener.git
 ```
-*Note: If you do not have MongoDB running, LynkShort will gracefully boot in **Demo Mode (In-Memory Mock DB)** automatically, seeding detailed statistical graphics so you can preview the complete dashboard instantly.*
 
-### Step 2: Configure & Start Backend
-1. Navigate to the backend folder:
-   ```bash
-   cd backend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Initialize the environment:
-   ```bash
-   cp .env.example .env
-   ```
-4. Start the backend in development hot-reload mode:
-   ```bash
-   npm run dev
-   ```
-*The API server will listen at `http://localhost:5000`.*
+```bash
+cd url-shortener
+```
 
-### Step 3: Configure & Start Frontend
-1. Open a new terminal window and navigate to the frontend folder:
-   ```bash
-   cd frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install --legacy-peer-deps
-   ```
-3. Boot up the Vite dev server:
-   ```bash
-   npm run dev
-   ```
-*The frontend dashboard will be available at `http://localhost:5173`.*
+## Backend Setup
+
+```bash
+cd backend
+npm install
+```
+
+Create .env
+
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+JWT_EXPIRES_IN=7d
+FRONTEND_URL=http://localhost:5173
+NODE_ENV=development
+```
+
+Run Backend
+
+```bash
+npm start
+```
+
+## Frontend Setup
+
+```bash
+cd frontend
+npm install
+```
+
+Create .env
+
+```env
+VITE_API_URL=http://localhost:5000/api
+VITE_REDIRECT_BASE=http://localhost:5000/r
+```
+
+Run Frontend
+
+```bash
+npm run dev
+```
+
+Build Frontend
+
+```bash
+npm run build
+```
 
 ---
 
-## 📡 REST API Specifications
+# Assumptions Made
 
-### Authentication Router (`/api/auth`)
-| HTTP Method | Route | Description | Auth Required |
-| :--- | :--- | :--- | :--- |
-| `POST` | `/register` | Sign up a new user, hashes password, returns token. | No |
-| `POST` | `/login` | Authenticate email + password, returns JWT token. | No |
-| `GET` | `/me` | Fetch active user profile from authorization header. | Yes |
+* Users must be authenticated to manage URLs.
+* Public visitors can access shortened URLs.
+* Analytics are recorded on every redirect.
+* QR codes are generated client-side.
+* MongoDB Atlas is available during deployment.
+* Modern browsers are used by end users.
+* Render and Vercel free tiers are sufficient for deployment.
 
-### URL Management Router (`/api/urls`)
-| HTTP Method | Route | Description | Auth Required |
-| :--- | :--- | :--- | :--- |
-| `POST` | `/` | Shorten a long URL. Supports customAlias & expiresAt. | Yes |
-| `GET` | `/` | Retrieve logged-in user's URLs with search filters. | Yes |
-| `GET` | `/:id` | Fetch core details for a single URL. | Yes |
-| `PUT` | `/:id` | Edit details (Destination, Alias, Expiration date). | Yes |
-| `DELETE` | `/:id` | Delete URL and all corresponding statistics permanently. | Yes |
+---
 
-### Statistical Analytics Router (`/api/analytics`)
-| HTTP Method | Route | Description | Auth Required |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/:id` | Fetch full aggregates (OS, Browser, Device, Referrer, Trend). | Yes |
-| `GET` | `/public/:shortCode` | Safe public click counts & trends (safe to share). | No |
+# AI Planning Document
 
-### Public Short Redirect Engine (`/r`)
-| HTTP Method | Route | Description | Auth Required |
-| :--- | :--- | :--- | :--- |
-| `GET` | `/r/:shortCode` | Perform temporary redirect & track telemetry asynchronously. | No |
-=======
-# url-shortener
-Full-Stack MERN Project to shorten long URL
->>>>>>> fcf4ff06dc7f786f6eff08e7ef538853fa9b8de5
+## AI Usage
+
+AI tools were used for:
+
+* Project architecture planning
+* API design recommendations
+* Database schema refinement
+* UI/UX improvements
+* Deployment troubleshooting
+* Documentation generation
+
+## Development Approach
+
+1. Define requirements.
+2. Design architecture.
+3. Build backend APIs.
+4. Develop frontend UI.
+5. Integrate authentication.
+6. Add analytics collection.
+7. Deploy and test.
+8. Optimize user experience.
+
+---
+
+# Architecture Diagram
+
+```text
+                 ┌─────────────────┐
+                 │     User        │
+                 └────────┬────────┘
+                          │
+                          ▼
+                 ┌─────────────────┐
+                 │ React Frontend  │
+                 │    (Vercel)     │
+                 └────────┬────────┘
+                          │ REST API
+                          ▼
+                 ┌─────────────────┐
+                 │ Express Backend │
+                 │    (Render)     │
+                 └────────┬────────┘
+                          │
+                          ▼
+                 ┌─────────────────┐
+                 │ MongoDB Atlas   │
+                 └─────────────────┘
+```
+
+---
+
+# Future Enhancements
+
+* Custom user domains
+* Password-protected URLs
+* Link expiration
+* Team collaboration
+* Advanced analytics
+* Export reports
+* Geo-location analytics
+* Bulk URL generation
+
+---
+
+# Screenshots
+
+Add screenshots of:
+
+* Login Page
+
+## Login Page
+
+![Login Page](./screenshots/login.png)
+
+* Register Page
+
+## Register Page
+
+![Register Page](./screenshots/register.png)
+
+* Dashboard
+
+## Dashboard Page
+
+![Dashboard Page](./screenshots/dashboard.png)
+
+* Display
+
+## Display
+
+![Display](./screenshots/display.png)
+
+* Activities
+
+## Activities
+
+![Activities](./screenshots/activity.png)
+
+* Analytics Page
+
+## Analytics Page
+
+![Analytics Page](./screenshots/analytics.png)
+
+* Public Statistics Page
+
+## Public Statistics Page
+
+![Public Statistics Page](./screenshots/insights.png)
+
+* Custom Alias
+
+## Custom Alias
+
+![Custom Alias](./screenshots/custom-alias.png)
+
+* QR Code 
+
+## QR Code
+
+![QR Code](./screenshots/qr.png)
+
+* Edit
+
+## Edit
+
+![Edit](./screenshots/edit.png)
+
+* Delete
+
+## Delete
+
+![Delete](./screenshots/delete.png)
+
+
+---
+
+# Author
+
+Mawiyah H
+
+B.Tech Information Technology
+
+Sri Shakthi Institute of Engineering and Technology
+
+---
+
+This project is a part of a hackathon run by https://katomaran.com
