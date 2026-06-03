@@ -405,67 +405,45 @@ AI tools were used for:
 
 Add screenshots of:
 
-* Login Page
-
 ## Login Page
 
 ![Login Page](./screenshots/login.png)
-
-* Register Page
 
 ## Register Page
 
 ![Register Page](./screenshots/register.png)
 
-* Dashboard
-
 ## Dashboard Page
 
 ![Dashboard Page](./screenshots/dashboard.png)
-
-* Display
 
 ## Display
 
 ![Display](./screenshots/display.png)
 
-* Activities
-
 ## Activities
 
 ![Activities](./screenshots/activity.png)
-
-* Analytics Page
 
 ## Analytics Page
 
 ![Analytics Page](./screenshots/analytics.png)
 
-* Public Statistics Page
-
 ## Public Statistics Page
 
 ![Public Statistics Page](./screenshots/insights.png)
-
-* Custom Alias
 
 ## Custom Alias
 
 ![Custom Alias](./screenshots/custom-alias.png)
 
-* QR Code 
-
 ## QR Code
 
 ![QR Code](./screenshots/qr.png)
 
-* Edit
-
 ## Edit
 
 ![Edit](./screenshots/edit.png)
-
-* Delete
 
 ## Delete
 
