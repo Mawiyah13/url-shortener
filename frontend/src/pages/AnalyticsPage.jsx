@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { urlService } from '../services/urlService';
 import { CustomChart } from '../components/CustomChart';
-import { 
+import {
   ArrowLeft, Calendar, Link2, ExternalLink, BarChart2,
   TrendingUp, Globe, Monitor, Share2, Shield
 } from 'lucide-react';
 
 export const AnalyticsPage = () => {
   const { id } = useParams();
-  
+
   const [urlInfo, setUrlInfo] = useState(null);
   const [stats, setStats] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +58,6 @@ export const AnalyticsPage = () => {
     );
   }
 
-  // Calculate percentages helper
   const renderDistributionBars = (items = [], accentColor = 'hsl(263, 90%, 50%)') => {
     const total = items.reduce((acc, curr) => acc + curr.count, 0);
     if (total === 0) {
@@ -76,13 +75,13 @@ export const AnalyticsPage = () => {
                 <span style={styles.distValue}>{item.count} clicks ({pct}%)</span>
               </div>
               <div style={styles.barTrack}>
-                <div 
-                  style={{ 
-                    ...styles.barFill, 
-                    width: `${pct}%`, 
+                <div
+                  style={{
+                    ...styles.barFill,
+                    width: `${pct}%`,
                     background: `linear-gradient(90deg, ${accentColor} 0%, hsl(326, 90%, 60%) 100%)`,
                     boxShadow: `0 0 8px ${accentColor}`
-                  }} 
+                  }}
                 />
               </div>
             </div>
@@ -92,17 +91,14 @@ export const AnalyticsPage = () => {
     );
   };
 
-  const fullShortUrl = `http://localhost:5000/r/${urlInfo.shortCode}`;
-
+  const fullShortUrl = `${import.meta.env.VITE_REDIRECT_BASE}/${urlInfo.shortCode}`;
   return (
     <div style={styles.container} className="animate-fade-in">
-      {/* Back button */}
       <Link to="/" style={styles.backBtn} className="btn-secondary">
         <ArrowLeft size={16} />
         <span>Back to Dashboard</span>
       </Link>
 
-      {/* Hero Header */}
       <header style={styles.hero}>
         <div style={styles.heroLeft}>
           <div style={styles.heroIconWrapper}>
@@ -128,7 +124,6 @@ export const AnalyticsPage = () => {
         </div>
       </header>
 
-      {/* Target details card */}
       <div className="glass-card" style={styles.metaCard}>
         <div style={styles.metaItem}>
           <span style={styles.metaLabel}>Original Destination URL</span>
@@ -154,7 +149,6 @@ export const AnalyticsPage = () => {
         </div>
       </div>
 
-      {/* Main daily trend block */}
       <div className="glass-card animate-slide-up" style={styles.chartCard}>
         <div style={styles.cardHeader}>
           <TrendingUp size={18} style={{ color: '#ec4899', marginRight: '8px' }} />
@@ -165,9 +159,7 @@ export const AnalyticsPage = () => {
         </div>
       </div>
 
-      {/* Multi-column Category Distributions */}
       <section style={styles.distGrid}>
-        {/* Row 1: Browsers and OS */}
         <div style={styles.distGridRow}>
           <div className="glass-card" style={styles.gridCard}>
             <div style={styles.cardHeader}>
@@ -190,7 +182,6 @@ export const AnalyticsPage = () => {
           </div>
         </div>
 
-        {/* Row 2: Referrers and Devices */}
         <div style={styles.distGridRow}>
           <div className="glass-card" style={styles.gridCard}>
             <div style={styles.cardHeader}>

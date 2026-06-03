@@ -10,7 +10,6 @@ import {
 export const Dashboard = () => {
   const { user } = useAuth();
 
-  // State variables
   const [urls, setUrls] = useState([]);
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -18,17 +17,14 @@ export const Dashboard = () => {
   const [formSuccess, setFormSuccess] = useState('');
   const [isCreating, setIsCreating] = useState(false);
 
-  // Create Link form state
   const [originalUrl, setOriginalUrl] = useState('');
   const [customAlias, setCustomAlias] = useState('');
   const [expiresAt, setExpiresAt] = useState('');
 
-  // QR Modal State
   const [qrModalOpen, setQrModalOpen] = useState(false);
   const [activeQrUrl, setActiveQrUrl] = useState('');
   const [activeQrTitle, setActiveQrTitle] = useState('');
 
-  // Edit Modal State
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editingUrl, setEditingUrl] = useState(null);
   const [editOriginalUrl, setEditOriginalUrl] = useState('');
@@ -37,10 +33,8 @@ export const Dashboard = () => {
   const [editError, setEditError] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
 
-  // Copied indicator state: { [urlId]: boolean }
   const [copiedStates, setCopiedStates] = useState({});
 
-  // Fetch all urls on boot and on search changes
   useEffect(() => {
     fetchUrls();
   }, [search]);
@@ -80,10 +74,8 @@ export const Dashboard = () => {
       setCustomAlias('');
       setExpiresAt('');
 
-      // Refresh URL listing
       fetchUrls();
 
-      // Clear success alert after 4 seconds
       setTimeout(() => setFormSuccess(''), 5000);
     } catch (err) {
       setFormError(err.message || 'Failed to shorten URL');
@@ -104,7 +96,7 @@ export const Dashboard = () => {
   };
 
   const handleCopy = (id, shortCode) => {
-    const fullShortUrl = `http://localhost:5000/r/${shortCode}`;
+    const fullShortUrl = `${import.meta.env.VITE_REDIRECT_BASE}/${shortCode}`;
     navigator.clipboard.writeText(fullShortUrl);
     setCopiedStates(prev => ({ ...prev, [id]: true }));
     setTimeout(() => {
@@ -113,7 +105,7 @@ export const Dashboard = () => {
   };
 
   const handleOpenQr = (shortCode, title) => {
-    const fullShortUrl = `http://localhost:5000/r/${shortCode}`;
+    const fullShortUrl = `${import.meta.env.VITE_REDIRECT_BASE}/${shortCode}`;
     setActiveQrUrl(fullShortUrl);
     setActiveQrTitle(shortCode);
     setQrModalOpen(true);
@@ -150,7 +142,6 @@ export const Dashboard = () => {
     }
   };
 
-  // Metrics calculators
   const totalClicks = urls.reduce((acc, curr) => acc + curr.clicks, 0);
   const totalLinks = urls.length;
 
@@ -163,13 +154,11 @@ export const Dashboard = () => {
 
   return (
     <div style={styles.container} className="animate-fade-in">
-      {/* 1. Header Hero Panel */}
       <header style={styles.header}>
         <h1 style={styles.title}>Shorten, Share & Track</h1>
         <p style={styles.subtitle}>Create elegant short links, generate instant scan QR codes, and monitor real-time analytical click metrics.</p>
       </header>
 
-      {/* 2. Stat Analytics Cards Grid */}
       <section style={styles.statsGrid} className="grid-cols-3">
         <div className="glass-card" style={styles.statCard}>
           <div style={styles.statInfo}>
@@ -206,7 +195,6 @@ export const Dashboard = () => {
         </div>
       </section>
 
-      {/* 3. URL Shortening Creation Form */}
       <section className="glass-card animate-slide-up" style={styles.creatorCard}>
         <h3 style={styles.cardTitle}>Create New Short Link</h3>
 
@@ -283,7 +271,6 @@ export const Dashboard = () => {
         </form>
       </section>
 
-      {/* 4. Link Filter and listings */}
       <section className="glass-card animate-slide-up" style={styles.listingSection}>
         <div style={styles.listingHeader}>
           <h3 style={styles.cardTitle}>My Active Short Links</h3>
@@ -329,7 +316,7 @@ export const Dashboard = () => {
               </thead>
               <tbody>
                 {urls.map((item) => {
-                  const fullShortUrl = `http://localhost:5000/r/${item.shortCode}`;
+                  const fullShortUrl = `${import.meta.env.VITE_REDIRECT_BASE}/${item.shortCode}`;
                   const isExpired = item.expiresAt && new Date(item.expiresAt) <= new Date();
 
                   return (
@@ -393,7 +380,6 @@ export const Dashboard = () => {
         )}
       </section>
 
-      {/* 5. Modals Area */}
       <QrCodeModal
         isOpen={qrModalOpen}
         onClose={() => setQrModalOpen(false)}
@@ -401,7 +387,6 @@ export const Dashboard = () => {
         title={activeQrTitle}
       />
 
-      {/* Edit URL Modal Popup */}
       {editModalOpen && (
         <div style={styles.modalOverlay} className="animate-fade-in" onClick={() => setEditModalOpen(false)}>
           <div style={styles.editModal} className="glass-card animate-slide-up" onClick={e => e.stopPropagation()}>

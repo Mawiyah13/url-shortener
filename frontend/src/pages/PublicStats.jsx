@@ -76,11 +76,10 @@ export const PublicStats = () => {
     );
   }
 
-  const fullShortUrl = `http://localhost:5000/r/${stats.shortCode}`;
+  const fullShortUrl = `${import.meta.env.VITE_REDIRECT_BASE}/${stats.shortCode}`;
 
   return (
     <div style={styles.container} className="animate-fade-in">
-      {/* Brand Header */}
       <header style={styles.header}>
         <div style={styles.brand}>
           <span style={styles.brandText}>Lynk<span style={styles.brandAccent}>Short</span></span>
@@ -95,7 +94,6 @@ export const PublicStats = () => {
         </div>
       </header>
 
-      {/* Main Core Statistics Panel */}
       <div style={styles.statsRow} className="grid-cols-3">
         <div className="glass-card" style={styles.statCard}>
           <div style={styles.statInfo}>
@@ -120,7 +118,6 @@ export const PublicStats = () => {
         </div>
       </div>
 
-      {/* Daily click trend chart */}
       <div className="glass-card animate-slide-up" style={styles.chartCard}>
         <div style={styles.chartHeader}>
           <TrendingUp size={18} style={{ color: '#ec4899', marginRight: '8px' }} />
@@ -131,7 +128,6 @@ export const PublicStats = () => {
         </div>
       </div>
 
-      {/* Footer disclaimer */}
       <footer style={styles.footer}>
         <p>This analytics data is securely processed and publicly shared by LynkShort. Individual visitor logs, IPs, and browser telemetries are completely protected.</p>
         <div style={{ marginTop: '20px' }}>

@@ -1,6 +1,5 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_URL;
 
-// Helper to fetch authorization headers
 const getHeaders = () => {
   const token = localStorage.getItem('token');
   return {
@@ -10,7 +9,6 @@ const getHeaders = () => {
 };
 
 export const urlService = {
-  // Create URL
   create: async (originalUrl, customAlias, expiresAt) => {
     const res = await fetch(`${API_BASE}/urls`, {
       method: 'POST',
@@ -22,7 +20,6 @@ export const urlService = {
     return data;
   },
 
-  // Get User's URLs
   getAll: async (search = '') => {
     const queryParams = search ? `?search=${encodeURIComponent(search)}` : '';
     const res = await fetch(`${API_BASE}/urls${queryParams}`, {
@@ -33,7 +30,6 @@ export const urlService = {
     return data;
   },
 
-  // Get details
   getDetails: async (id) => {
     const res = await fetch(`${API_BASE}/urls/${id}`, {
       headers: getHeaders()
@@ -43,7 +39,6 @@ export const urlService = {
     return data;
   },
 
-  // Update URL
   update: async (id, updateFields) => {
     const res = await fetch(`${API_BASE}/urls/${id}`, {
       method: 'PUT',
@@ -55,7 +50,6 @@ export const urlService = {
     return data;
   },
 
-  // Delete URL
   delete: async (id) => {
     const res = await fetch(`${API_BASE}/urls/${id}`, {
       method: 'DELETE',
@@ -66,7 +60,6 @@ export const urlService = {
     return data;
   },
 
-  // Get Detailed Analytics
   getAnalytics: async (id) => {
     const res = await fetch(`${API_BASE}/analytics/${id}`, {
       headers: getHeaders()
@@ -76,7 +69,6 @@ export const urlService = {
     return data;
   },
 
-  // Get Public Statistics
   getPublicStats: async (shortCode) => {
     const res = await fetch(`${API_BASE}/analytics/public/${shortCode}`);
     const data = await res.json();
