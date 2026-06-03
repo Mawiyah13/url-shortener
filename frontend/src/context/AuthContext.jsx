@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const AuthContext = createContext(null);
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_URL;
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -11,7 +11,6 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [demoMode, setDemoMode] = useState(false);
 
-  // Validate token on boot
   useEffect(() => {
     const verifyUserToken = async () => {
       if (!token) {
@@ -33,12 +32,10 @@ export const AuthProvider = ({ children }) => {
           setIsAuthenticated(true);
           setDemoMode(!!userData.demoMode);
         } else {
-          // Token expired or invalid
           handleLogout();
         }
       } catch (error) {
         console.error('Boot Auth check failed:', error);
-        // If server is down, keep token but set loading false so user can see app states
       } finally {
         setIsLoading(false);
       }
